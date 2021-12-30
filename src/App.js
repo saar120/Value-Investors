@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import { getInvestors, insertInvestor } from "./Data/FirebaseFunctions";
+import { getInvestors } from "./Data/FirebaseFunctions";
 import HomePage from "./Pages/HomePage";
 import InvestorsPage from "./Pages/InvestorsPage";
 import InvestorPage from "./Pages/InvestorPage";
@@ -24,7 +24,7 @@ function App() {
     <div className="App">
       <Router>
         <InvestorsProvider>
-          <Navbar />
+          <Navbar data={Data} />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/investors" element={<InvestorsPage />} />
