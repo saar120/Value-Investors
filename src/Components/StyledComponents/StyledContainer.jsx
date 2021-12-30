@@ -5,7 +5,10 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2rem;
+  margin: 1rem;
+  .paragraph {
+    line-height: 1.4;
+  }
 `;
 
 export default Container;
