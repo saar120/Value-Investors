@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { investorsContext } from "../InvestorsContext";
+import React from "react";
 import Container from "../Components/StyledComponents/StyledContainer";
 import Header from "../Components/StyledComponents/StyledHeader";
 import ContentCard from "../Components/StyledComponents/StyledContentCard";
