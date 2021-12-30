@@ -5,10 +5,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 3rem;
-  h3 {
-    color: ${(props) => props.color};
-  }
+  margin: 2rem;
 `;
 
 export default Container;

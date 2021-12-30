@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import getInvestors from "./FirebaseFunctions";
-import Container from "./Components/StyledContainer";
+import { getInvestors, insertInvestor } from "./Data/FirebaseFunctions";
+import HomePage from "./Pages/HomePage";
+import InvestorsPage from "./Pages/InvestorsPage";
+import InvestorPage from "./Pages/InvestorPage";
+import { InvestorsProvider } from "./InvestorsContext";
+import Navbar from "./Components/Navbar";
 
 function App() {
   const [Data, setData] = useState([]);
@@ -12,13 +17,21 @@ function App() {
       console.log(investors);
       setData(investors);
     };
+
     getData();
   }, []);
   return (
     <div className="App">
-      <Container color={"blue"}>
-        <h3>Hello World</h3>
-      </Container>
+      <Router>
+        <InvestorsProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/investors" element={<InvestorsPage />} />
+            <Route path="/investors/:name" element={<InvestorPage />} />
+          </Routes>
+        </InvestorsProvider>
+      </Router>
     </div>
   );
 }
