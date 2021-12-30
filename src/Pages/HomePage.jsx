@@ -5,7 +5,6 @@ import Header from "../Components/StyledComponents/StyledHeader";
 import ContentCard from "../Components/StyledComponents/StyledContentCard";
 
 export default function HomePage() {
-  const value = useContext(investorsContext);
   return (
     <Container>
       <Header color={"#BF0414"}>Welcome to Value Investors</Header>

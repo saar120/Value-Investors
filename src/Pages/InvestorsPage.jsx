@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import InvestorCard from "../Components/InvestorCard";
 import Container from "../Components/StyledComponents/StyledContainer";
-import ContentCard from "../Components/StyledComponents/StyledContentCard";
 import { investorsContext } from "../InvestorsContext";
 
 export default function InvestorsPage() {
