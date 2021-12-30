@@ -6,9 +6,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   margin: 1rem;
-  .paragraph {
-    line-height: 1.4;
-  }
+  gap: 1.5rem;
 `;
 
 export default Container;
