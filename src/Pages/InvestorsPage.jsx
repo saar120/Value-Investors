@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import InvestorCard from "../Components/InvestorCard";
 import Container from "../Components/StyledComponents/StyledContainer";
 import { investorsContext } from "../InvestorsContext";
@@ -6,10 +6,16 @@ import { investorsContext } from "../InvestorsContext";
 export default function InvestorsPage() {
   const [Investors] = useContext(investorsContext);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filterByValue = (array, value) => {
+    return array.filter((item) => item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  };
+
   const renderInvestors = () => {
     return Investors.length === 0
       ? ""
-      : Investors.map((investor) => {
+      : filterByValue(Investors, searchTerm).map((investor) => {
           const { name, id, image, company } = investor;
           return <InvestorCard key={id} name={name} image={image} company={company} />;
         });
@@ -18,7 +24,14 @@ export default function InvestorsPage() {
   return (
     <Container>
       <div className="search">
-        <input type="text" placeholder="Search..." />
+        <input
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
+          value={searchTerm}
+          type="text"
+          placeholder="Search..."
+        />
         {renderInvestors()}
       </div>
     </Container>

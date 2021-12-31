@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import ContentCard from "./StyledComponents/StyledContentCard";
 import styled from "styled-components";
 
@@ -11,8 +12,13 @@ const InvestorCardStyled = styled.div`
 `;
 
 export default function InvestorCard({ name, company, image }) {
+  const navigate = useNavigate();
+
+  const routeChange = () => {
+    navigate(`/investors/${name}`);
+  };
   return (
-    <ContentCard>
+    <ContentCard onClick={routeChange}>
       <InvestorCardStyled image={image}>
         <div className="image"></div>
         <div className="name">{name}</div>
