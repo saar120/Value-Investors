@@ -11,11 +11,11 @@ const InvestorCardStyled = styled.div`
   }
 `;
 
-export default function InvestorCard({ name, company, image }) {
+export default function InvestorCard({ name, company, image, id }) {
   const navigate = useNavigate();
 
   const routeChange = () => {
-    navigate(`/investors/${name}`);
+    navigate(`/investors/${id}`);
   };
   return (
     <ContentCard onClick={routeChange}>

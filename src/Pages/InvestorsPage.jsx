@@ -17,7 +17,7 @@ export default function InvestorsPage() {
       ? ""
       : filterByValue(Investors, searchTerm).map((investor) => {
           const { name, id, image, company } = investor;
-          return <InvestorCard key={id} name={name} image={image} company={company} />;
+          return <InvestorCard key={id} id={id} name={name} image={image} company={company} />;
         });
   };
 

@@ -9,6 +9,8 @@ const getInvestors = async () => {
   return investors;
 };
 
+const getInvestor = async () => {};
+
 const insertInvestor = (newData) => {
   addDoc(dataCollection, newData);
 };
