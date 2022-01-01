@@ -17,10 +17,8 @@ export default function PieChart(props) {
   });
 
   return (
-    <div>
+    <div style={{ height: "clamp(300px,20vw,500px)", width: "clamp(300px,20vw,500px)" }}>
       <Doughnut
-        width="300"
-        height="400"
         options={{
           onClick: (_, element) => {
             if (element.length !== 1) return;

@@ -1,15 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ContentCard from "./StyledComponents/StyledContentCard";
-import styled from "styled-components";
-
-const InvestorCardStyled = styled.div`
-  .image {
-    height: 300px;
-    width: 300px;
-    background: url(${(props) => props.image}) center center / cover;
-  }
-`;
+import ImageHolder from "./StyledComponents/StyledImageHolder";
 
 export default function InvestorCard({ name, company, image, id }) {
   const navigate = useNavigate();
@@ -19,11 +11,9 @@ export default function InvestorCard({ name, company, image, id }) {
   };
   return (
     <ContentCard onClick={routeChange}>
-      <InvestorCardStyled image={image}>
-        <div className="image"></div>
-        <div className="name">{name}</div>
-        <div className="company">{company}</div>
-      </InvestorCardStyled>
+      <ImageHolder image={image} size="15" />
+      <div className="name">{name}</div>
+      <div className="company">{company}</div>
     </ContentCard>
   );
 }
