@@ -10,7 +10,7 @@ export default function PieChart(props) {
   let values = [];
   let names = [];
 
-  props.data.forEach((item, i) => {
+  props.data.forEach((item) => {
     tickers.push(item.ticker);
     names.push(item.name);
     values.push(item.precentOfPort);
@@ -22,6 +22,10 @@ export default function PieChart(props) {
         width="300"
         height="400"
         options={{
+          onClick: (_, element) => {
+            if (element.length !== 1) return;
+            console.log(tickers[element[0].index]);
+          },
           maintainAspectRatio: false,
           plugins: {
             legend: {
