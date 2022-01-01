@@ -1,18 +1,10 @@
 import styled from "styled-components";
 
-const ContentCard = styled.div`
-  padding: 2rem 2.5rem;
-  color: white;
-  background-color: #7e7e7e;
-  border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  .paragraph {
-    font-size: 1.1rem;
-    line-height: 1.6;
-  }
-  ul {
-    list-style: none;
-  }
+const Card = styled.div`
+  padding: 1rem;
+  border-radius: 15px;
+  background-color: #f7f7ff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
 `;
 
-export default ContentCard;
+export default Card;

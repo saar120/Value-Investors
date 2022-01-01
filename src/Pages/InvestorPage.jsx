@@ -5,6 +5,8 @@ import PieChart from "../Components/PieChart";
 import ImageHolder from "../Components/StyledComponents/StyledImageHolder";
 import Divider from "@mui/material/Divider";
 import styled from "styled-components";
+import Card from "../Components/StyledComponents/StyledContentCard";
+import ActivityCard from "../Components/ActivityCard";
 
 const InvestorPageStyled = styled.div`
   margin: 1rem;
@@ -27,21 +29,18 @@ const InvestorPageStyled = styled.div`
     gap: 1.4rem;
     align-items: center;
   }
-  .top-content {
+  .top {
     justify-content: space-around;
     .head {
       order: 0;
     }
   }
-  .middle-content {
+  .middle,
+  .bottom {
     justify-content: center;
   }
 
-  .portfolio {
-    padding: 0.5rem;
-    border-radius: 15px;
-    background-color: #f7f7ff;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
+  .title {
     font-weight: bold;
   }
 
@@ -50,13 +49,6 @@ const InvestorPageStyled = styled.div`
       order: 1;
     }
   }
-`;
-
-const Card = styled.div`
-  padding: 1rem;
-  border-radius: 15px;
-  background-color: #f7f7ff;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
 `;
 
 export default function InvestorPage() {
@@ -71,11 +63,19 @@ export default function InvestorPage() {
     setInvestor();
   }, [investorId]);
 
+  const usdFormatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+
+  const renderActivity = () => {
+    return InvestorData.recentQuarter.map((activity) => {
+      return <ActivityCard activity={activity} key={activity.name} />;
+    });
+  };
+
   return !InvestorData.name ? (
     ""
   ) : (
     <InvestorPageStyled>
-      <div className="top-content content">
+      <div className="top content">
         <div className="head">
           <div className="header">{InvestorData.name}</div>
           <div className="sub-header">{InvestorData.company}</div>
@@ -83,13 +83,18 @@ export default function InvestorPage() {
         <ImageHolder size="30" circle image={InvestorData.image} />
       </div>
       <Divider style={{ width: "100%" }}>Financial Details</Divider>
-      <div className="middle-content content">
-        <Card>Total Net worth:</Card>
-        <div className="portfolio">
-          <div>Portfolio</div>
+      <div className="middle content">
+        <Card>
+          <div className="title"> Total Net worth:</div>
+          {usdFormatter.format(InvestorData.PortfolioValue)}
+        </Card>
+        <Card>
+          <div className="title">Portfolio</div>
           <PieChart data={InvestorData.topHoldings} />
-        </div>
+        </Card>
       </div>
+      <Divider style={{ width: "100%" }}>Recent Activity</Divider>
+      <div className="bottom content">{renderActivity()}</div>
     </InvestorPageStyled>
   );
 }
