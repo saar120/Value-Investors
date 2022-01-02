@@ -29,13 +29,17 @@ const SignFormStyled = styled.div`
 `;
 
 export default function SignForm(props) {
+  const { userContext } = useContext(Context);
+  const [user] = userContext;
   const [signedUpStatus, setSignedUpStatus] = useState(true);
-  const [user, setUser] = useContext(Context);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(event);
   };
+
   return (
     <SignFormStyled>
       <div className="top">
@@ -43,34 +47,44 @@ export default function SignForm(props) {
           X
         </Button>
       </div>
-      <Box component="form" onSubmit={handleSubmit}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-          {signedUpStatus ? "Login" : "Sign Up"}
-        </Button>
-      </Box>
-      <Link className="pointer" onClick={() => setSignedUpStatus(!signedUpStatus)} variant="body2">
-        {signedUpStatus ? "Don't have an account? Sign Up" : "Already have an account? Login"}
-      </Link>
+      {user.name ? (
+        <div>Hello user</div>
+      ) : (
+        <>
+          <Box component="form" onSubmit={handleSubmit}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+              {signedUpStatus ? "Login" : "Sign Up"}
+            </Button>
+          </Box>
+          <Link className="pointer" onClick={() => setSignedUpStatus(!signedUpStatus)} variant="body2">
+            {signedUpStatus ? "Don't have an account? Sign Up" : "Already have an account? Login"}
+          </Link>
+        </>
+      )}
     </SignFormStyled>
   );
 }

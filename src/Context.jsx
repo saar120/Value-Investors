@@ -17,5 +17,9 @@ export function ContextProvider(props) {
     getData();
   }, []);
 
-  return <Context.Provider value={[Investors, setInvestors, user, setUser]}>{props.children}</Context.Provider>;
+  return (
+    <Context.Provider value={{ investorsContext: [Investors, setInvestors], userContext: [user, setUser] }}>
+      {props.children}
+    </Context.Provider>
+  );
 }

@@ -4,7 +4,8 @@ import Container from "../Components/StyledComponents/StyledContainer";
 import { Context } from "../Context";
 
 export default function InvestorsPage() {
-  const [Investors] = useContext(Context);
+  const { investorsContext } = useContext(Context);
+  const [Investors] = investorsContext;
 
   const [searchTerm, setSearchTerm] = useState("");
 
