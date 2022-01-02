@@ -36,7 +36,7 @@ export default function SignForm() {
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(user.user, { displayName: name });
-      insertUser({ id: user.user.uid });
+      await insertUser({ id: user.user.uid });
     } catch (err) {
       console.error("Error:", err.message);
       errorMessage(err.code);

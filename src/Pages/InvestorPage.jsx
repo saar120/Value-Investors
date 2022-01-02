@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Context } from "../Context";
 import { useParams } from "react-router-dom";
-import { getInvestor } from "../Data/FirebaseFunctions";
+import { getInvestor, addToUserWatchlist, removeFromUserWatchlist } from "../Data/FirebaseFunctions";
 import PieChart from "../Components/PieChart";
 import ImageHolder from "../Components/StyledComponents/StyledImageHolder";
 import Divider from "@mui/material/Divider";
 import styled from "styled-components";
+import { Button } from "@mui/material";
 import Card from "../Components/StyledComponents/StyledContentCard";
 import ActivityCard from "../Components/ActivityCard";
 
@@ -53,7 +55,11 @@ const InvestorPageStyled = styled.div`
 
 export default function InvestorPage() {
   const [InvestorData, setInvestorData] = useState({});
+  const [inWatchlist, setInWatchlist] = useState(false);
+  const { userContext, watchlistContext } = useContext(Context);
+  const [user] = userContext;
   const investorId = useParams().id;
+  const [watchlist, setWatchlistFromDB] = watchlistContext;
 
   // const width = window.innerWidth;
 
@@ -65,12 +71,29 @@ export default function InvestorPage() {
     setInvestor();
   }, [investorId]);
 
+  useEffect(() => {
+    if (watchlist.find((investor) => investor.id === InvestorData.id)) {
+      setInWatchlist(true);
+    } else {
+      setInWatchlist(false);
+    }
+  }, [watchlist, InvestorData]);
+
   const usdFormatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
   const renderActivity = () => {
     return InvestorData.recentQuarter.map((activity) => {
       return <ActivityCard activity={activity} key={activity.name} />;
     });
+  };
+
+  const watchlistButtonHandler = () => {
+    if (!user) {
+      console.log("only sign users");
+      return;
+    }
+    inWatchlist ? removeFromUserWatchlist(user.uid, InvestorData) : addToUserWatchlist(user.uid, InvestorData);
+    setWatchlistFromDB();
   };
 
   return !InvestorData.name ? (
@@ -81,6 +104,8 @@ export default function InvestorPage() {
         <div className="head">
           <div className="header">{InvestorData.name}</div>
           <div className="sub-header">{InvestorData.company}</div>
+
+          <Button onClick={watchlistButtonHandler}>{inWatchlist ? "Remove from watchlist" : "Add to watchlist"}</Button>
         </div>
         <ImageHolder size="30" circle image={InvestorData.image} />
       </div>

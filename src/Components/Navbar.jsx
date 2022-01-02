@@ -11,10 +11,10 @@ export default function Navbar() {
   return (
     <NavbarStyled>
       <div className="navbar left">
-        <Link to="/" className="navItem">
+        <Link onClick={() => setShowForm(false)} to="/" className="navItem">
           Home
         </Link>
-        <Link to="/investors" className="navItem">
+        <Link onClick={() => setShowForm(false)} to="/investors" className="navItem">
           Investors
         </Link>
       </div>
