@@ -22,7 +22,6 @@ export function ContextProvider(props) {
     const data = await getUserData(user.uid);
     if (!data) return;
     setWatchlist(data.watchlist);
-    console.log(data.watchlist);
   };
 
   useEffect(() => {
