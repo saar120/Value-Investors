@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../Context";
+import { auth } from "../Data/FirebaseConfig";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
 import styled from "styled-components";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 
-const SignFormStyled = styled.div`
+const AccountMenuStyled = styled.div`
+  z-index: 100;
   width: 300px;
   height: 370px;
   position: absolute;
@@ -28,27 +31,39 @@ const SignFormStyled = styled.div`
   }
 `;
 
-export default function SignForm(props) {
+export default function AccountMenu(props) {
   const { userContext } = useContext(Context);
   const [user] = userContext;
   const [signedUpStatus, setSignedUpStatus] = useState(true);
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
 
-  const handleSubmit = (event) => {
+  const register = async (email, password) => {
+    try {
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      return user;
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event);
+    const data = new FormData(event.currentTarget);
+    if (signedUpStatus) {
+      console.log("login");
+    } else {
+      register(data.get("email"), data.get("password"));
+    }
   };
 
   return (
-    <SignFormStyled>
+    <AccountMenuStyled>
       <div className="top">
         <Button onClick={() => props.cancel()} sx={{ mr: 2 }}>
           X
         </Button>
       </div>
-      {user.name ? (
-        <div>Hello user</div>
+      {user ? (
+        <div>Hello {user.email}</div>
       ) : (
         <>
           <Box component="form" onSubmit={handleSubmit}>
@@ -60,8 +75,6 @@ export default function SignForm(props) {
               label="Email Address"
               name="email"
               autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               autoFocus
             />
             <TextField
@@ -73,8 +86,6 @@ export default function SignForm(props) {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
             />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               {signedUpStatus ? "Login" : "Sign Up"}
@@ -85,6 +96,6 @@ export default function SignForm(props) {
           </Link>
         </>
       )}
-    </SignFormStyled>
+    </AccountMenuStyled>
   );
 }

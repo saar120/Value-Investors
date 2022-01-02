@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import NavbarStyled from "./StyledComponents/StyledNavbar";
-import SignForm from "./SignForm";
+import AccountMenu from "./AccountMenu";
 export default function Navbar() {
   const [showForm, setShowForm] = useState(false);
 
@@ -20,7 +20,7 @@ export default function Navbar() {
           Account
         </div>
       </div>
-      {showForm && <SignForm cancel={() => setShowForm(!showForm)} />}
+      {showForm && <AccountMenu cancel={() => setShowForm(!showForm)} />}
     </NavbarStyled>
   );
 }

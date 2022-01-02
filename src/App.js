@@ -5,7 +5,6 @@ import InvestorsPage from "./Pages/InvestorsPage";
 import InvestorPage from "./Pages/InvestorPage";
 import { ContextProvider } from "./Context";
 import Navbar from "./Components/Navbar";
-import SignIn from "./Pages/SignIn";
 
 function App() {
   return (
@@ -14,7 +13,6 @@ function App() {
         <ContextProvider>
           <Navbar />
           <Routes>
-            <Route path="/sign" element={<SignIn />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/investors" element={<InvestorsPage />} />
             <Route path="/investors/:id" element={<InvestorPage />} />
