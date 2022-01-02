@@ -87,12 +87,14 @@ export default function InvestorPage() {
     });
   };
 
-  const watchlistButtonHandler = () => {
+  const watchlistButtonHandler = async () => {
     if (!user) {
       console.log("only sign users");
       return;
     }
-    inWatchlist ? removeFromUserWatchlist(user.uid, InvestorData) : addToUserWatchlist(user.uid, InvestorData);
+    inWatchlist
+      ? await removeFromUserWatchlist(user.uid, InvestorData)
+      : await addToUserWatchlist(user.uid, InvestorData);
     setWatchlistFromDB();
   };
 

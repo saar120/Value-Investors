@@ -11,6 +11,11 @@ export default function UserLoggedMenu() {
   const [watchlist, setWatchlistFromDB] = watchlistContext;
   const [user] = userContext;
 
+  const removeHandler = async (investor) => {
+    await removeFromUserWatchlist(user.uid, investor);
+    setWatchlistFromDB();
+  };
+
   const renderWatchlist = () => {
     return watchlist.length === 0
       ? ""
@@ -18,13 +23,7 @@ export default function UserLoggedMenu() {
           return (
             <div key={investor.id}>
               <Link to={`/investors/${investor.id}`}>{investor.name}</Link>
-              <Button
-                onClick={() => {
-                  removeFromUserWatchlist(user.uid, investor);
-                  setWatchlistFromDB();
-                }}>
-                remove
-              </Button>
+              <Button onClick={() => removeHandler(investor)}>remove</Button>
             </div>
           );
         });
