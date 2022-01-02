@@ -105,7 +105,9 @@ export default function InvestorPage() {
           <div className="header">{InvestorData.name}</div>
           <div className="sub-header">{InvestorData.company}</div>
 
-          <Button onClick={watchlistButtonHandler}>{inWatchlist ? "Remove from watchlist" : "Add to watchlist"}</Button>
+          <Button onClick={() => watchlistButtonHandler()}>
+            {inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
+          </Button>
         </div>
         <ImageHolder size="30" circle image={InvestorData.image} />
       </div>
