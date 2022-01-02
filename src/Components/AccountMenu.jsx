@@ -1,16 +1,17 @@
 import React, { useContext } from "react";
 import { Context } from "../Context";
 import styled from "styled-components";
-import Button from "@mui/material/Button";
+import Fab from "@mui/material/Fab";
 import SignForm from "./SignForm";
 import UserLoggedMenu from "./UserLoggedMenu";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 const AccountMenuStyled = styled.div`
   z-index: 100;
   width: 300px;
-  height: 370px;
+  padding: 2rem;
   position: absolute;
-  top: calc(50% - 185px);
+  top: calc(50% - 180px - 1rem);
   left: calc(50% - 150px);
   border-radius: 15px;
   background-color: #f7f7ff;
@@ -18,9 +19,9 @@ const AccountMenuStyled = styled.div`
   display: flex;
   flex-direction: column;
   .top {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
+    position: absolute;
+    top: 5px;
+    right: 5px;
   }
   .pointer {
     cursor: pointer;
@@ -34,9 +35,9 @@ export default function AccountMenu(props) {
   return (
     <AccountMenuStyled>
       <div className="top">
-        <Button onClick={() => props.cancel()} sx={{ mr: 2 }}>
-          X
-        </Button>
+        <Fab size="small" onClick={() => props.cancel()} color="primary">
+          <CloseRoundedIcon />
+        </Fab>
       </div>
       {user ? <UserLoggedMenu /> : <SignForm />}
     </AccountMenuStyled>

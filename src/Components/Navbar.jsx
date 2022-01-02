@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../Context";
 import { Link } from "react-router-dom";
 import NavbarStyled from "./StyledComponents/StyledNavbar";
 import AccountMenu from "./AccountMenu";
 export default function Navbar() {
   const [showForm, setShowForm] = useState(false);
+  const { userContext } = useContext(Context);
+  const [user] = userContext;
 
   return (
     <NavbarStyled>
@@ -17,7 +20,7 @@ export default function Navbar() {
       </div>
       <div className="navbar right">
         <div onClick={() => setShowForm(!showForm)} className="navItem">
-          Account
+          {user ? "Your account" : "Login"}
         </div>
       </div>
       {showForm && <AccountMenu cancel={() => setShowForm(!showForm)} />}

@@ -1,5 +1,5 @@
 import { db } from "./FirebaseConfig";
-import { collection, getDocs, addDoc, getDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
 
 const dataCollection = collection(db, "investors");
 
@@ -19,4 +19,13 @@ const insertInvestor = (newData) => {
   addDoc(dataCollection, newData);
 };
 
-export { getInvestors, insertInvestor, getInvestor };
+const insertUser = async (newData) => {
+  await setDoc(doc(db, "users", newData.id), newData);
+};
+
+const getUserData = async (id) => {
+  const data = await getDoc(db, "users", id);
+  return data.data();
+};
+
+export { getInvestors, insertInvestor, getInvestor, insertUser, getUserData };

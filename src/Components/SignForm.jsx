@@ -1,29 +1,55 @@
 import React, { useState } from "react";
 import { auth } from "../Data/FirebaseConfig";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "@firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "@firebase/auth";
+import { insertUser } from "../Data/FirebaseFunctions";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
 export default function SignForm() {
   const [signedUpStatus, setSignedUpStatus] = useState(true);
+  const [error, setError] = useState("");
 
-  const register = async (email, password) => {
+  const errorMessage = (code) => {
+    switch (code) {
+      case "auth/weak-password":
+        setError("Password must be at least 6 characters");
+        break;
+      case "auth/email-already-in-use":
+        setError("Email already in use");
+        break;
+      case "auth/wrong-password":
+        setError("Wrong password");
+        break;
+      case "auth/user-not-found":
+        setError("User not found");
+        break;
+      default:
+        break;
+    }
+  };
+
+  const register = async (email, password, name) => {
+    if (error) setError("");
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
-      return user;
+      await updateProfile(user.user, { displayName: name });
+      insertUser({ id: user.user.uid });
     } catch (err) {
-      console.log(err.message);
+      console.error("Error:", err.message);
+      errorMessage(err.code);
     }
   };
 
   const login = async (email, password) => {
+    if (error) setError("");
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      return user;
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
-      console.log(err.message);
+      console.error("Error:", err.message);
+      errorMessage(err.code);
     }
   };
   const handleSubmit = async (event) => {
@@ -32,13 +58,27 @@ export default function SignForm() {
     if (signedUpStatus) {
       login(data.get("email"), data.get("password"));
     } else {
-      register(data.get("email"), data.get("password"));
+      register(data.get("email"), data.get("password"), data.get("name"));
     }
   };
 
   return (
     <>
       <Box component="form" onSubmit={handleSubmit}>
+        {signedUpStatus ? (
+          ""
+        ) : (
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+          />
+        )}
         <TextField
           margin="normal"
           required
@@ -59,7 +99,12 @@ export default function SignForm() {
           id="password"
           autoComplete="current-password"
         />
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+        {error && (
+          <Typography variant="body2" color="red" align="center">
+            {error}
+          </Typography>
+        )}
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 1, mb: 1 }}>
           {signedUpStatus ? "Login" : "Sign Up"}
         </Button>
       </Box>

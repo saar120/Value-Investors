@@ -7,7 +7,7 @@ export const Context = createContext();
 
 export function ContextProvider(props) {
   const [Investors, setInvestors] = useState([]);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
@@ -16,7 +16,6 @@ export function ContextProvider(props) {
   useEffect(() => {
     const getData = async () => {
       const investors = await getInvestors();
-      console.log(investors);
       setInvestors(investors);
     };
     getData();
