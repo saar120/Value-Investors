@@ -19,7 +19,6 @@ export function ContextProvider(props) {
       console.log(investors);
       setInvestors(investors);
     };
-
     getData();
   }, []);
 
