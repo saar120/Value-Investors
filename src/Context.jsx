@@ -10,7 +10,6 @@ export function ContextProvider(props) {
   const [user, setUser] = useState({});
 
   onAuthStateChanged(auth, (currentUser) => {
-    console.log(currentUser);
     setUser(currentUser);
   });
 
