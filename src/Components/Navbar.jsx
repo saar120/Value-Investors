@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import NavbarStyled from "./StyledComponents/StyledNavbar";
+import SignForm from "./SignForm";
 export default function Navbar() {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <NavbarStyled>
       <div className="navbar left">
@@ -13,8 +16,11 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="navbar right">
-        <div className="navItem">Account</div>
+        <div onClick={() => setShowForm(!showForm)} className="navItem">
+          Account
+        </div>
       </div>
+      {showForm && <SignForm cancel={() => setShowForm(!showForm)} />}
     </NavbarStyled>
   );
 }

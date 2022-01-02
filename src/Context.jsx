@@ -1,10 +1,11 @@
 import { createContext, useState, useEffect } from "react";
 import { getInvestors } from "./Data/FirebaseFunctions";
 
-export const investorsContext = createContext();
+export const Context = createContext();
 
-export function InvestorsProvider(props) {
+export function ContextProvider(props) {
   const [Investors, setInvestors] = useState([]);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const getData = async () => {
@@ -16,5 +17,5 @@ export function InvestorsProvider(props) {
     getData();
   }, []);
 
-  return <investorsContext.Provider value={[Investors, setInvestors]}>{props.children}</investorsContext.Provider>;
+  return <Context.Provider value={[Investors, setInvestors, user, setUser]}>{props.children}</Context.Provider>;
 }

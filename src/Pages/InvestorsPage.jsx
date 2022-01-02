@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import InvestorCard from "../Components/InvestorCard";
 import Container from "../Components/StyledComponents/StyledContainer";
-import { investorsContext } from "../InvestorsContext";
+import { Context } from "../Context";
 
 export default function InvestorsPage() {
-  const [Investors] = useContext(investorsContext);
+  const [Investors] = useContext(Context);
 
   const [searchTerm, setSearchTerm] = useState("");
 

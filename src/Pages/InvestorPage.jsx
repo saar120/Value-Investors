@@ -55,6 +55,8 @@ export default function InvestorPage() {
   const [InvestorData, setInvestorData] = useState({});
   const investorId = useParams().id;
 
+  // const width = window.innerWidth;
+
   useEffect(() => {
     const setInvestor = async () => {
       const investor = await getInvestor(investorId);
@@ -85,7 +87,7 @@ export default function InvestorPage() {
       <Divider style={{ width: "100%" }}>Financial Details</Divider>
       <div className="middle content">
         <Card>
-          <div className="title"> Total Net worth:</div>
+          <div className="title"> Total net worth:</div>
           {usdFormatter.format(InvestorData.PortfolioValue)}
         </Card>
         <Card>

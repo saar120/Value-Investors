@@ -1,5 +1,6 @@
+import { db, auth } from "./FirebaseConfig";
 import { collection, getDocs, addDoc, getDoc, doc } from "firebase/firestore";
-import db from "./FirebaseConfig";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
 
 const dataCollection = collection(db, "investors");
 
@@ -18,5 +19,17 @@ const getInvestor = async (id) => {
 const insertInvestor = (newData) => {
   addDoc(dataCollection, newData);
 };
+
+const register = async () => {
+  try {
+    const user = await createUserWithEmailAndPassword(auth);
+  } catch (err) {
+    console.error(err.messege);
+  }
+};
+
+const signIn = async () => {};
+
+const signOut = async () => {};
 
 export { getInvestors, insertInvestor, getInvestor };
