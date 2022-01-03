@@ -10,9 +10,6 @@ const AccountMenuStyled = styled.div`
   z-index: 100;
   width: 300px;
   padding: 2rem;
-  /* position: absolute;
-  top: calc(50% - 180px - 1rem);
-  left: calc(50% - 150px); */
   position: fixed;
   top: 50%;
   left: 50%;

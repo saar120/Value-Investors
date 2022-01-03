@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import InvestorCard from "../Components/InvestorCard";
 import Container from "../Components/StyledComponents/StyledContainer";
 import { Context } from "../Context";
+import { TextField } from "@mui/material";
 
 export default function InvestorsPage() {
   const { investorsContext } = useContext(Context);
@@ -25,16 +26,17 @@ export default function InvestorsPage() {
   return (
     <Container>
       <div className="search">
-        <input
+        <TextField
+          id="search"
+          label="Search"
+          type="search"
           onChange={(e) => {
             setSearchTerm(e.target.value);
           }}
           value={searchTerm}
-          type="text"
-          placeholder="Search..."
         />
-        {renderInvestors()}
       </div>
+      {renderInvestors()}
     </Container>
   );
 }

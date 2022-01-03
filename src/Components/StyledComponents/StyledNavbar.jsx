@@ -6,7 +6,7 @@ const NavbarStyled = styled.div`
   align-items: center;
   padding: 0 1rem;
   height: 2.5rem;
-  background-color: #2995bf;
+  background-color: #1976d2;
   div {
     display: flex;
     align-items: center;
@@ -14,46 +14,17 @@ const NavbarStyled = styled.div`
     gap: 1rem;
     .navItem {
       position: relative;
-      padding: 0.3rem;
+      padding: 0.4rem;
       color: white;
       font-weight: 700;
       font-size: 0.9rem;
       text-decoration: none;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
     }
-    .navItem:after,
-    .navItem:before {
-      content: "";
-      position: absolute;
-      display: block;
-      border: 0px solid transparent;
-      width: 0%;
-      height: 0%;
-      transition: all 0.5s ease;
-    }
-
-    .navItem:after {
-      width: 0%;
-      height: 0%;
-      top: 0;
-      left: 0;
-      border-top: 2px solid transparent;
-      border-left: 2px solid transparent;
-    }
-
-    .navItem:before {
-      width: 0%;
-      height: 0%;
-      right: 0;
-      bottom: 0;
-      border-bottom: 2px solid transparent;
-      border-right: 2px solid transparent;
-    }
-
-    .navItem:hover::before,
-    .navItem:hover::after {
+    .navItem:hover {
       width: 100%;
-      height: 100%;
-      border-color: #fff;
+      border-color: white;
     }
   }
 `;

@@ -9,6 +9,7 @@ import ImageHolder from "../Components/StyledComponents/StyledImageHolder";
 import { Button, CircularProgress, Divider, Box } from "@mui/material";
 import Card from "../Components/StyledComponents/StyledContentCard";
 import ActivityCard from "../Components/ActivityCard";
+import Snackbar from "../Components/Snackbar";
 
 export default function InvestorPage() {
   const [InvestorData, setInvestorData] = useState({});
@@ -48,7 +49,7 @@ export default function InvestorPage() {
 
   const watchlistButtonHandler = async () => {
     if (!user) {
-      delayedState(1000, setPopup);
+      delayedState(8000, setPopup);
       console.log("only sign users");
       return;
     }
@@ -66,6 +67,7 @@ export default function InvestorPage() {
     </Box>
   ) : (
     <StyledInvestorPage>
+      {popup && <Snackbar text="Only signed users can access this feature" />}
       <div className="top content">
         <div className="head">
           <div className="header">{InvestorData.name}</div>
@@ -74,7 +76,6 @@ export default function InvestorPage() {
           <Button className="watchlist-btn" disabled={disabled} onClick={() => watchlistButtonHandler()}>
             {inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
           </Button>
-          {popup && <div>popup</div>}
         </div>
         <ImageHolder size="30" circle image={InvestorData.image} />
       </div>
