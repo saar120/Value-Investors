@@ -11,11 +11,13 @@ import Card from "../Components/StyledComponents/StyledContentCard";
 import ActivityCard from "../Components/ActivityCard";
 import Snackbar from "../Components/Snackbar";
 import stockAPI from "../Utils/stockAPI";
+import { getData, setData } from "../Utils/ssesionStorage";
 
 export default function InvestorPage() {
   const [InvestorData, setInvestorData] = useState({});
   const [inWatchlist, setInWatchlist] = useState(false);
   const [disabled, setIsDisabled] = useState(false);
+  const [stocks, setStocks] = useState([]);
   const [popup, setPopup] = useState(false);
   const { userContext, watchlistContext } = useContext(Context);
   const [user] = userContext;
@@ -31,6 +33,14 @@ export default function InvestorPage() {
     };
     setInvestor();
   }, [investorId]);
+
+  useEffect(() => {
+    const stocksData = getData("stocks");
+    if (!stocksData) {
+      return;
+    }
+    console.log(stocksData);
+  }, []);
 
   useEffect(() => {
     if (watchlist.find((investor) => investor.id === InvestorData.id)) {
@@ -69,6 +79,7 @@ export default function InvestorPage() {
       delayedState(8000, setPopup);
       return;
     }
+    //TODO: set 82-96 to other function
     let checkedTicker = ticker.includes(".") ? ticker.replace(".", "-") : ticker;
     console.log(checkedTicker);
     const { data } = await stockAPI.get("/", { params: { symbol: checkedTicker } });
