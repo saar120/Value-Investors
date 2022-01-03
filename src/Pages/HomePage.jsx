@@ -6,7 +6,7 @@ import ContentCard from "../Components/StyledComponents/StyledContentCard";
 export default function HomePage() {
   return (
     <Container>
-      <Header color={"#BF0414"}>Welcome to Value Investors</Header>
+      <Header color={"#f5655b"}>Welcome to Value Investors</Header>
       <ContentCard>
         <div className="paragraph">
           Here you can find data about world best Investors, <br />

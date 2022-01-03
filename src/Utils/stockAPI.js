@@ -25,13 +25,3 @@ const returnStockObj = async (ticker) => {
 };
 
 export default returnStockObj;
-
-// const stockObj = {
-//   name: "Bank of America Corporation",
-//   mktCap: "364.11B",
-//   currentPrice: 44.49,
-//   industry: "Banks—Diversified",
-//   recommendation: "buy",
-//   bookValue: "30.22",
-//   midTermTrend: "UP",
-// };

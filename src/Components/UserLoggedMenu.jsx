@@ -31,6 +31,7 @@ export default function UserLoggedMenu({ closePage }) {
 
   return (
     <>
+      <div>{user.displayName}</div>
       <Button
         onClick={() => {
           signOut(auth);

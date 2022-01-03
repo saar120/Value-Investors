@@ -12,47 +12,23 @@ import ActivityCard from "../Components/ActivityCard";
 import Snackbar from "../Components/Snackbar";
 import returnStockObj from "../Utils/stockAPI";
 import { getData, setData } from "../Utils/ssesionStorage";
-// import debounce from "lodash.debounce";
-
-import styled from "styled-components";
+import debounce from "lodash.debounce";
 import { ClickAwayHook } from "../Utils/ClickAwayHook";
-const AccountMenuStyled = styled.div`
-  z-index: 100;
-  width: 300px;
-  padding: 2rem;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 15px;
-  background-color: #f7f7ff;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
-  display: flex;
-  flex-direction: column;
-  .top {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-  }
-  .pointer {
-    cursor: pointer;
-  }
-`;
+import StockPopup from "../Components/StockPopup";
+import StockCard from "../Components/StockCard";
 
 export default function InvestorPage() {
   const [InvestorData, setInvestorData] = useState({});
   const [inWatchlist, setInWatchlist] = useState(false);
   const [disabled, setIsDisabled] = useState(false);
   const [stocks, setStocks] = useState({});
-  const { visible, setVisible, ref } = ClickAwayHook(false);
+  const { visible: stockVisible, setVisible: setStockVisible, ref: stockCardRef } = ClickAwayHook(false);
   const [currentStock, setCurrentStock] = useState({});
   const [popup, setPopup] = useState(false);
   const { userContext, watchlistContext } = useContext(Context);
   const [user] = userContext;
   const [watchlist, setWatchlistFromDB] = watchlistContext;
   const investorId = useParams().id;
-
-  // const width = window.innerWidth;
 
   useEffect(() => {
     const setInvestor = async () => {
@@ -82,8 +58,7 @@ export default function InvestorPage() {
 
   const watchlistButtonHandler = async () => {
     if (!user) {
-      delayedState(8000, setPopup);
-      console.log("only sign users");
+      delayedState(6000, setPopup);
       return;
     }
     setIsDisabled(true);
@@ -95,30 +70,31 @@ export default function InvestorPage() {
   };
 
   const stockClickHandler = async (ticker) => {
-    console.log(ticker);
     if (!user) {
-      delayedState(8000, setPopup);
+      delayedState(6000, setPopup);
       return;
     }
     setCurrentStock({});
-    setVisible(true);
+    setStockVisible(true);
     const formattedTicker = ticker.includes(".") ? ticker.replace(".", "-") : ticker;
     if (stocks[formattedTicker]) {
-      console.log(stocks[formattedTicker]);
       setCurrentStock(stocks[formattedTicker]);
       return;
     }
     const newStockObj = await returnStockObj(formattedTicker);
+    console.log("request");
     const newStocks = { ...stocks, [formattedTicker]: newStockObj };
     setData("stocks", newStocks);
     setStocks(getData("stocks"));
     setCurrentStock(newStockObj);
   };
 
+  const debouncedStockClick = debounce(stockClickHandler, 500);
+
   const renderActivity = () => {
     return InvestorData.recentQuarter.map((activity) => {
       return (
-        <ActivityCard activity={activity} key={activity.name} stockClick={() => stockClickHandler(activity.ticker)} />
+        <ActivityCard activity={activity} key={activity.name} stockClick={() => debouncedStockClick(activity.ticker)} />
       );
     });
   };
@@ -149,16 +125,16 @@ export default function InvestorPage() {
         </Card>
         <Card>
           <div className="title">Portfolio</div>
-          <PieChart data={InvestorData.topHoldings} stockClick={(ticker) => stockClickHandler(ticker)} />
+          <PieChart data={InvestorData.topHoldings} stockClick={(ticker) => debouncedStockClick(ticker)} />
         </Card>
       </div>
       <Divider style={{ width: "100%" }}>Recent Activity</Divider>
       <div className="bottom content">{renderActivity()}</div>
       <Divider style={{ width: "100%" }}>Recent Articles</Divider>
-      {visible && (
-        <AccountMenuStyled ref={ref}>
-          {Object.keys(currentStock).length === 0 ? "loading" : currentStock.name}
-        </AccountMenuStyled>
+      {stockVisible && (
+        <StockPopup ref={stockCardRef}>
+          {Object.keys(currentStock).length === 0 ? <CircularProgress size={50} /> : <StockCard stock={currentStock} />}
+        </StockPopup>
       )}
     </StyledInvestorPage>
   );
