@@ -10,6 +10,7 @@ import { Button, CircularProgress, Divider, Box } from "@mui/material";
 import Card from "../Components/StyledComponents/StyledContentCard";
 import ActivityCard from "../Components/ActivityCard";
 import Snackbar from "../Components/Snackbar";
+import stockAPI from "../stockAPI";
 
 export default function InvestorPage() {
   const [InvestorData, setInvestorData] = useState({});
@@ -43,7 +44,9 @@ export default function InvestorPage() {
 
   const renderActivity = () => {
     return InvestorData.recentQuarter.map((activity) => {
-      return <ActivityCard activity={activity} key={activity.name} />;
+      return (
+        <ActivityCard activity={activity} key={activity.name} stockClick={() => stockClickHandler(activity.ticker)} />
+      );
     });
   };
 
@@ -59,6 +62,27 @@ export default function InvestorPage() {
       : await addToUserWatchlist(user.uid, InvestorData);
     await setWatchlistFromDB();
     setIsDisabled(false);
+  };
+
+  const stockClickHandler = async (ticker) => {
+    if (!user) {
+      delayedState(8000, setPopup);
+      return;
+    }
+    console.log(ticker);
+    const { data } = await stockAPI.get("/", { params: { symbol: ticker } });
+    console.log(data);
+    const newStockObj = {
+      name: data.quoteType.shortName,
+      mktCap: data.price.marketCap.fmt,
+      currentPrice: data.financialData.currentPrice.raw,
+      industry: data.summaryProfile.industry,
+      freeCashFlow: data.financialData.freeCashflow.fmt,
+      recommendation: data.financialData.recommendationKey,
+      bookValue: data.defaultKeyStatistics.bookValue.fmt,
+      midTermTrend: data.pageViews.midTermTrend,
+    };
+    console.log(newStockObj);
   };
 
   return !InvestorData.name ? (
@@ -87,7 +111,7 @@ export default function InvestorPage() {
         </Card>
         <Card>
           <div className="title">Portfolio</div>
-          <PieChart data={InvestorData.topHoldings} />
+          <PieChart data={InvestorData.topHoldings} stockClick={(ticker) => stockClickHandler(ticker)} />
         </Card>
       </div>
       <Divider style={{ width: "100%" }}>Recent Activity</Divider>

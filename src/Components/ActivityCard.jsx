@@ -15,7 +15,7 @@ export default function ActivityCard(props) {
   const checkActivity = activity.includes("Add") || activity.includes("Buy") ? true : false;
 
   return (
-    <Card onClick={() => console.log(ticker)}>
+    <Card onClick={() => props.stockClick(ticker)}>
       <ActivityCardStyled activity={checkActivity}>
         <div className="title">{name}</div>
         <div>

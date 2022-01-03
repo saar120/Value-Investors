@@ -22,7 +22,7 @@ export default function PieChart(props) {
         options={{
           onClick: (_, element) => {
             if (element.length !== 1) return;
-            console.log(tickers[element[0].index]);
+            props.stockClick(tickers[element[0].index]);
           },
           maintainAspectRatio: false,
           plugins: {
