@@ -21,6 +21,7 @@ const NavbarStyled = styled.div`
       text-decoration: none;
       border-bottom: 3px solid transparent;
       transition: all 0.3s ease;
+      cursor: pointer;
     }
     .navItem:hover {
       width: 100%;

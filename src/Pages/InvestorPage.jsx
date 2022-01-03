@@ -10,14 +10,42 @@ import { Button, CircularProgress, Divider, Box } from "@mui/material";
 import Card from "../Components/StyledComponents/StyledContentCard";
 import ActivityCard from "../Components/ActivityCard";
 import Snackbar from "../Components/Snackbar";
-import stockAPI from "../Utils/stockAPI";
+import returnStockObj from "../Utils/stockAPI";
 import { getData, setData } from "../Utils/ssesionStorage";
+// import debounce from "lodash.debounce";
+
+import styled from "styled-components";
+import { ClickAwayHook } from "../Utils/ClickAwayHook";
+const AccountMenuStyled = styled.div`
+  z-index: 100;
+  width: 300px;
+  padding: 2rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  background-color: #f7f7ff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
+  display: flex;
+  flex-direction: column;
+  .top {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  .pointer {
+    cursor: pointer;
+  }
+`;
 
 export default function InvestorPage() {
   const [InvestorData, setInvestorData] = useState({});
   const [inWatchlist, setInWatchlist] = useState(false);
   const [disabled, setIsDisabled] = useState(false);
-  const [stocks, setStocks] = useState([]);
+  const [stocks, setStocks] = useState({});
+  const { visible, setVisible, ref } = ClickAwayHook(false);
+  const [currentStock, setCurrentStock] = useState({});
   const [popup, setPopup] = useState(false);
   const { userContext, watchlistContext } = useContext(Context);
   const [user] = userContext;
@@ -31,16 +59,16 @@ export default function InvestorPage() {
       const investor = await getInvestor(investorId);
       setInvestorData(investor);
     };
+    const setStocksFromStorage = () => {
+      const stocksData = getData("stocks");
+      if (!stocksData) {
+        return;
+      }
+      setStocks(stocksData);
+    };
+    setStocksFromStorage();
     setInvestor();
   }, [investorId]);
-
-  useEffect(() => {
-    const stocksData = getData("stocks");
-    if (!stocksData) {
-      return;
-    }
-    console.log(stocksData);
-  }, []);
 
   useEffect(() => {
     if (watchlist.find((investor) => investor.id === InvestorData.id)) {
@@ -51,14 +79,6 @@ export default function InvestorPage() {
   }, [watchlist, InvestorData]);
 
   const usdFormatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
-
-  const renderActivity = () => {
-    return InvestorData.recentQuarter.map((activity) => {
-      return (
-        <ActivityCard activity={activity} key={activity.name} stockClick={() => stockClickHandler(activity.ticker)} />
-      );
-    });
-  };
 
   const watchlistButtonHandler = async () => {
     if (!user) {
@@ -75,26 +95,32 @@ export default function InvestorPage() {
   };
 
   const stockClickHandler = async (ticker) => {
+    console.log(ticker);
     if (!user) {
       delayedState(8000, setPopup);
       return;
     }
-    //TODO: set 82-96 to other function
-    let checkedTicker = ticker.includes(".") ? ticker.replace(".", "-") : ticker;
-    console.log(checkedTicker);
-    const { data } = await stockAPI.get("/", { params: { symbol: checkedTicker } });
-    console.log(data);
-    const newStockObj = {
-      name: data.quoteType.shortName,
-      mktCap: data.price.marketCap.fmt,
-      currentPrice: data.financialData.currentPrice.raw,
-      industry: data.summaryProfile.industry,
-      freeCashFlow: data.financialData.freeCashflow.fmt,
-      recommendation: data.financialData.recommendationKey,
-      bookValue: data.defaultKeyStatistics.bookValue.fmt,
-      midTermTrend: data.pageViews.midTermTrend,
-    };
-    console.log(newStockObj);
+    setCurrentStock({});
+    setVisible(true);
+    const formattedTicker = ticker.includes(".") ? ticker.replace(".", "-") : ticker;
+    if (stocks[formattedTicker]) {
+      console.log(stocks[formattedTicker]);
+      setCurrentStock(stocks[formattedTicker]);
+      return;
+    }
+    const newStockObj = await returnStockObj(formattedTicker);
+    const newStocks = { ...stocks, [formattedTicker]: newStockObj };
+    setData("stocks", newStocks);
+    setStocks(getData("stocks"));
+    setCurrentStock(newStockObj);
+  };
+
+  const renderActivity = () => {
+    return InvestorData.recentQuarter.map((activity) => {
+      return (
+        <ActivityCard activity={activity} key={activity.name} stockClick={() => stockClickHandler(activity.ticker)} />
+      );
+    });
   };
 
   return !InvestorData.name ? (
@@ -129,6 +155,11 @@ export default function InvestorPage() {
       <Divider style={{ width: "100%" }}>Recent Activity</Divider>
       <div className="bottom content">{renderActivity()}</div>
       <Divider style={{ width: "100%" }}>Recent Articles</Divider>
+      {visible && (
+        <AccountMenuStyled ref={ref}>
+          {Object.keys(currentStock).length === 0 ? "loading" : currentStock.name}
+        </AccountMenuStyled>
+      )}
     </StyledInvestorPage>
   );
 }
