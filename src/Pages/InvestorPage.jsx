@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Context } from "../Context";
+import { Context } from "../Context/Context";
 import { useParams } from "react-router-dom";
 import { getInvestor, addToUserWatchlist, removeFromUserWatchlist } from "../Data/FirebaseFunctions";
 import { delayedState } from "../Utils/utilFunction";
@@ -10,7 +10,7 @@ import { Button, CircularProgress, Divider, Box } from "@mui/material";
 import Card from "../Components/StyledComponents/StyledContentCard";
 import ActivityCard from "../Components/ActivityCard";
 import Snackbar from "../Components/Snackbar";
-import stockAPI from "../stockAPI";
+import stockAPI from "../Utils/stockAPI";
 
 export default function InvestorPage() {
   const [InvestorData, setInvestorData] = useState({});
@@ -69,8 +69,9 @@ export default function InvestorPage() {
       delayedState(8000, setPopup);
       return;
     }
-    console.log(ticker);
-    const { data } = await stockAPI.get("/", { params: { symbol: ticker } });
+    let checkedTicker = ticker.includes(".") ? ticker.replace(".", "-") : ticker;
+    console.log(checkedTicker);
+    const { data } = await stockAPI.get("/", { params: { symbol: checkedTicker } });
     console.log(data);
     const newStockObj = {
       name: data.quoteType.shortName,

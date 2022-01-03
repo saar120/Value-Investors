@@ -3,7 +3,7 @@ import "./App.css";
 import HomePage from "./Pages/HomePage";
 import InvestorsPage from "./Pages/InvestorsPage";
 import InvestorPage from "./Pages/InvestorPage";
-import { ContextProvider } from "./Context";
+import { ContextProvider } from "./Context/Context";
 import Navbar from "./Components/Navbar";
 
 function App() {

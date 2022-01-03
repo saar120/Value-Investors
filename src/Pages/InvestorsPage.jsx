@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import InvestorCard from "../Components/InvestorCard";
 import Container from "../Components/StyledComponents/StyledContainer";
-import { Context } from "../Context";
+import { Context } from "../Context/Context";
 import { TextField } from "@mui/material";
 
 export default function InvestorsPage() {

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Context } from "../Context";
+import { Context } from "../Context/Context";
 import { signOut } from "@firebase/auth";
 import { auth } from "../Data/FirebaseConfig";
 import Button from "@mui/material/Button";

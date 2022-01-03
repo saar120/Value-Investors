@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Context } from "../Context";
+import { Context } from "../Context/Context";
 import { Link } from "react-router-dom";
 import NavbarStyled from "./StyledComponents/StyledNavbar";
 import AccountMenu from "./AccountMenu";
