@@ -10,9 +10,13 @@ const AccountMenuStyled = styled.div`
   z-index: 100;
   width: 300px;
   padding: 2rem;
-  position: absolute;
+  /* position: absolute;
   top: calc(50% - 180px - 1rem);
-  left: calc(50% - 150px);
+  left: calc(50% - 150px); */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 15px;
   background-color: #f7f7ff;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
@@ -39,7 +43,7 @@ export default function AccountMenu(props) {
           <CloseRoundedIcon />
         </Fab>
       </div>
-      {user ? <UserLoggedMenu /> : <SignForm />}
+      {user ? <UserLoggedMenu closePage={() => props.cancel()} /> : <SignForm closePage={() => props.cancel()} />}
     </AccountMenuStyled>
   );
 }

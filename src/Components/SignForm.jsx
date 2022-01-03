@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import { auth } from "../Data/FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "@firebase/auth";
 import { insertUser } from "../Data/FirebaseFunctions";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
-import Typography from "@mui/material/Typography";
+import { Box, TextField, Button, Link, Typography } from "@mui/material";
 
-export default function SignForm() {
+export default function SignForm({ closePage }) {
   const [signedUpStatus, setSignedUpStatus] = useState(true);
   const [error, setError] = useState("");
 
@@ -37,6 +33,7 @@ export default function SignForm() {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(user.user, { displayName: name });
       await insertUser({ id: user.user.uid });
+      closePage();
     } catch (err) {
       console.error("Error:", err.message);
       errorMessage(err.code);
@@ -47,6 +44,7 @@ export default function SignForm() {
     if (error) setError("");
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      closePage();
     } catch (err) {
       console.error("Error:", err.message);
       errorMessage(err.code);
