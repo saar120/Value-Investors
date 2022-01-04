@@ -14,6 +14,10 @@ REACT based site to show world **Best Investors** - their portfolio and recent a
 
 You can check the live demo at - [Value Investors](https://value-investors.netlify.app).
 
+![demo video](screenshots/demo.gif)
+![demo](screenshots/screen1.png)
+![demo video](screenshots/screen2.png)
+
 ## Technologies used
 
 - **Context API**
