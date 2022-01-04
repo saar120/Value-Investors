@@ -6,6 +6,8 @@ import SignForm from "./SignForm";
 import UserLoggedMenu from "./UserLoggedMenu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
+const widthBreakPoint = 700;
+
 const AccountMenuStyled = styled.div`
   z-index: 100;
   width: 300px;
@@ -35,12 +37,16 @@ export default function AccountMenu(props) {
 
   return (
     <AccountMenuStyled>
-      <div className="top">
-        <Fab size="small" onClick={() => props.cancel()} color="primary">
-          <CloseRoundedIcon />
-        </Fab>
-      </div>
-      {user ? <UserLoggedMenu closePage={() => props.cancel()} /> : <SignForm closePage={() => props.cancel()} />}
+      {window.innerWidth > widthBreakPoint ? (
+        ""
+      ) : (
+        <div className="top">
+          <Fab size="small" onClick={props.cancel} color="primary">
+            <CloseRoundedIcon />
+          </Fab>
+        </div>
+      )}
+      {user ? <UserLoggedMenu closePage={props.cancel} /> : <SignForm closePage={props.cancel} />}
     </AccountMenuStyled>
   );
 }

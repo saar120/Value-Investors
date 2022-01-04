@@ -130,7 +130,7 @@ export default function InvestorPage() {
       </div>
       <Divider style={{ width: "100%" }}>Recent Activity</Divider>
       <div className="bottom content">{renderActivity()}</div>
-      <Divider style={{ width: "100%" }}>Recent Articles</Divider>
+
       {stockVisible && (
         <StockPopup ref={stockCardRef}>
           {Object.keys(currentStock).length === 0 ? <CircularProgress size={50} /> : <StockCard stock={currentStock} />}
