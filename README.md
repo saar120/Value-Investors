@@ -1,6 +1,6 @@
 # Value Investors
 
-REACT based site to show world best **Investors** - their portfolio and recent activities, also you can view basic updated inormation about their stocks.
+REACT based site to show world **Best Investors** - their portfolio and recent activities, also you can view basic updated inormation about their stocks.
 
 ## Features
 
@@ -13,8 +13,6 @@ REACT based site to show world best **Investors** - their portfolio and recent a
 ## Demo
 
 You can check the live demo at - [Value Investors](https://value-investors.netlify.app).
-
-![](screenshots/demo.gif)
 
 ## Technologies used
 
