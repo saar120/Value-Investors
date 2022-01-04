@@ -4,30 +4,30 @@ import { useParams } from "react-router-dom";
 import { getInvestor, addToUserWatchlist, removeFromUserWatchlist } from "../Data/FirebaseFunctions";
 import { delayedState } from "../Utils/utilFunction";
 import StyledInvestorPage from "./StyledPages/StyledInvestorPage";
-import PieChart from "../Components/PieChart";
-import ImageHolder from "../Components/StyledComponents/StyledImageHolder";
-import { Button, CircularProgress, Divider, Box } from "@mui/material";
-import Card from "../Components/StyledComponents/StyledContentCard";
-import ActivityCard from "../Components/ActivityCard";
-import Snackbar from "../Components/Snackbar";
 import returnStockObj from "../Utils/stockAPI";
 import { getData, setData } from "../Utils/ssesionStorage";
 import debounce from "lodash.debounce";
 import { ClickAwayHook } from "../Utils/ClickAwayHook";
+import Card from "../Components/StyledComponents/StyledContentCard";
+import PieChart from "../Components/PieChart";
+import ImageHolder from "../Components/StyledComponents/StyledImageHolder";
+import ActivityCard from "../Components/ActivityCard";
+import Snackbar from "../Components/Snackbar";
 import StockPopup from "../Components/StockPopup";
 import StockCard from "../Components/StockCard";
+import { Button, CircularProgress, Divider, Box } from "@mui/material";
 
 export default function InvestorPage() {
   const [InvestorData, setInvestorData] = useState({});
   const [inWatchlist, setInWatchlist] = useState(false);
   const [disabled, setIsDisabled] = useState(false);
   const [stocks, setStocks] = useState({});
-  const { visible: stockVisible, setVisible: setStockVisible, ref: stockCardRef } = ClickAwayHook(false);
-  const [currentStock, setCurrentStock] = useState({});
   const [popup, setPopup] = useState(false);
+  const [currentStock, setCurrentStock] = useState({});
   const { userContext, watchlistContext } = useContext(Context);
   const [user] = userContext;
   const [watchlist, setWatchlistFromDB] = watchlistContext;
+  const { visible: stockVisible, setVisible: setStockVisible, ref: stockCardRef } = ClickAwayHook(false);
   const investorId = useParams().id;
 
   useEffect(() => {

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const ImageHolder = styled.div`
-  height: clamp(300px, ${(props) => props.size}vw, 500px);
-  width: clamp(300px, ${(props) => props.size}vw, 500px);
+  height: clamp(250px, ${(props) => props.size}vw, 500px);
+  width: clamp(250px, ${(props) => props.size}vw, 500px);
   background: url(${(props) => props.image}) center center / cover;
   border-radius: ${(props) => (props.circle ? "50%" : "10px")};
   border: ${(props) => (props.circle ? "3px solid #f7f7ff" : "")};

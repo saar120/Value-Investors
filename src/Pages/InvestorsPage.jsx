@@ -1,8 +1,13 @@
 import React, { useContext, useState } from "react";
 import InvestorCard from "../Components/InvestorCard";
-import Container from "../Components/StyledComponents/StyledContainer";
 import { Context } from "../Context/Context";
 import { TextField } from "@mui/material";
+import Container from "../Components/StyledComponents/StyledContainer";
+import styled from "styled-components";
+
+const StyledInvestorsPage = styled.div`
+  margin: 1rem;
+`;
 
 export default function InvestorsPage() {
   const { investorsContext } = useContext(Context);
@@ -24,7 +29,7 @@ export default function InvestorsPage() {
   };
 
   return (
-    <Container>
+    <StyledInvestorsPage>
       <div className="search">
         <TextField
           id="search"
@@ -36,7 +41,7 @@ export default function InvestorsPage() {
           value={searchTerm}
         />
       </div>
-      {renderInvestors()}
-    </Container>
+      <Container>{renderInvestors()}</Container>
+    </StyledInvestorsPage>
   );
 }
