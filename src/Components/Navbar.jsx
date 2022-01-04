@@ -3,7 +3,7 @@ import { Context } from "../Context/Context";
 import { Link } from "react-router-dom";
 import NavbarStyled from "./StyledComponents/StyledNavbar";
 import AccountMenu from "./AccountMenu";
-import { ClickAwayListener, Portal } from "@mui/material";
+import { ClickAwayListener, Portal, Button } from "@mui/material";
 
 export default function Navbar() {
   const [showForm, setShowForm] = useState(false);
@@ -13,19 +13,23 @@ export default function Navbar() {
   return (
     <NavbarStyled>
       <div className="navbar left">
-        <Link to="/" className="navItem">
-          Home
-        </Link>
-        <Link to="/investors" className="navItem">
-          Investors
-        </Link>
+        <Button variant="filled">
+          <Link to="/" className="navItem">
+            Home
+          </Link>
+        </Button>
+        <Button variant="filled">
+          <Link to="/investors" className="navItem">
+            Investors
+          </Link>
+        </Button>
       </div>
       <div className="navbar right">
         <ClickAwayListener onClickAway={() => setShowForm(false)}>
           <div>
-            <div onClick={() => setShowForm((prev) => !prev)} className="navItem">
+            <Button onClick={() => setShowForm((prev) => !prev)} className="navItem">
               {user ? "Your account" : "Login"}
-            </div>
+            </Button>
             {showForm ? (
               <Portal>
                 <AccountMenu cancel={() => setShowForm(!showForm)} />
