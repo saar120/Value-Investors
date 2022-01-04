@@ -25,7 +25,7 @@ const StyledStockCard = styled.div`
 export default function StockCard({ stock }) {
   const rows = [
     { propery: "Stock Price:", value: "$" + stock.currentPrice },
-    { propery: "Market Cap:", value: stock.currentPrice },
+    { propery: "Market Cap:", value: stock.mktCap },
     { propery: "Book Value:", value: stock.bookValue },
     { propery: "Free Cash Flow:", value: stock.freeCashFlow },
     { propery: "Industry:", value: stock.industry },
