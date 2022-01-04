@@ -5,6 +5,19 @@ import { auth } from "../Data/FirebaseConfig";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { removeFromUserWatchlist } from "../Data/FirebaseFunctions";
+import styled from "styled-components";
+
+const StyledLoggedMenu = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .name {
+    span {
+      font-weight: bold;
+    }
+  }
+`;
 
 export default function UserLoggedMenu({ closePage }) {
   const { watchlistContext, userContext } = useContext(Context);
@@ -30,8 +43,10 @@ export default function UserLoggedMenu({ closePage }) {
   };
 
   return (
-    <>
-      <div>{user.displayName}</div>
+    <StyledLoggedMenu>
+      <div className="name">
+        Hi, <span>{user.displayName}</span>
+      </div>
       <Button
         onClick={() => {
           signOut(auth);
@@ -41,6 +56,6 @@ export default function UserLoggedMenu({ closePage }) {
       </Button>
       <div>{watchlist.length === 0 ? "Your Watchlist is empty" : "Watchlist"}</div>
       {renderWatchlist()}
-    </>
+    </StyledLoggedMenu>
   );
 }
