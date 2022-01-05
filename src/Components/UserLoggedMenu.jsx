@@ -30,8 +30,10 @@ const WatchlistStyled = styled.ul`
   width: 100%;
   li {
     display: flex;
+    padding: 0.3rem;
     justify-content: space-between;
     align-items: center;
+    border: 2px solid #1976d2;
   }
   .link {
     text-decoration: none;

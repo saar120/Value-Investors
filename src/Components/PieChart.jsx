@@ -13,7 +13,7 @@ export default function PieChart(props) {
   props.data.forEach((item) => {
     tickers.push(item.ticker);
     names.push(item.name);
-    values.push(item.precentOfPort);
+    values.push(item.percentOfPort);
   });
 
   return (

@@ -10,7 +10,7 @@ export default function InvestorCard({ name, company, image, id }) {
     navigate(`/investors/${id}`);
   };
   return (
-    <Card onClick={routeChange}>
+    <Card onClick={routeChange} style={{ cursor: "pointer", maxWidth: "280px" }}>
       <ImageHolder image={image} size="10" />
       <div className="name title">{name}</div>
       <div className="company">{company}</div>

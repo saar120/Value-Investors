@@ -11,7 +11,7 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 
-const dataCollection = collection(db, "investors");
+const dataCollection = collection(db, "investorsV2");
 
 const getInvestors = async () => {
   const data = await getDocs(dataCollection);
@@ -20,7 +20,7 @@ const getInvestors = async () => {
 };
 
 const getInvestor = async (id) => {
-  const docRef = doc(db, "investors", id);
+  const docRef = doc(db, "investorsV2", id);
   const data = await getDoc(docRef);
   return { ...data.data(), id };
 };

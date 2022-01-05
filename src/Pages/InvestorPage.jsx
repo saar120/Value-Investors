@@ -82,7 +82,6 @@ export default function InvestorPage() {
       return;
     }
     const newStockObj = await returnStockObj(formattedTicker);
-    console.log("request");
     const newStocks = { ...stocks, [formattedTicker]: newStockObj };
     setData("stocks", newStocks);
     setStocks(getData("stocks"));
@@ -125,7 +124,7 @@ export default function InvestorPage() {
         </Card>
         <Card>
           <div className="title">Portfolio</div>
-          <PieChart data={InvestorData.topHoldings} stockClick={(ticker) => debouncedStockClick(ticker)} />
+          <PieChart data={InvestorData.holdings} stockClick={(ticker) => debouncedStockClick(ticker)} />
         </Card>
       </div>
       <Divider style={{ width: "100%" }}>Recent Activity</Divider>
