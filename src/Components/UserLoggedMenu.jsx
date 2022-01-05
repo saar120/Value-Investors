@@ -31,6 +31,7 @@ const WatchlistStyled = styled.ul`
   li {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   .link {
     text-decoration: none;
