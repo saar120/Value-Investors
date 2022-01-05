@@ -12,7 +12,7 @@ const AccountMenuStyled = styled.div`
   color: black;
   z-index: 100;
   width: 300px;
-  padding: 2rem;
+  padding: 1rem;
   position: fixed;
   top: 50%;
   left: 50%;
