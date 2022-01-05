@@ -10,18 +10,30 @@ export default function PieChart(props) {
   let values = [];
   let names = [];
 
+  let othersCount = 0;
+
   props.data.forEach((item) => {
+    if (item.percentOfPort < 2) {
+      othersCount += item.percentOfPort;
+      return;
+    }
     tickers.push(item.ticker);
     names.push(item.name);
     values.push(item.percentOfPort);
   });
+
+  if (othersCount > 0) {
+    tickers.push("Others");
+    values.push(othersCount);
+    names.push("Smaller than 1%");
+  }
 
   return (
     <div style={{ height: "clamp(300px,20vw,400px)", width: "clamp(300px,20vw,400px)" }}>
       <Doughnut
         options={{
           onClick: (_, element) => {
-            if (element.length !== 1) return;
+            if (element.length !== 1 || tickers[element[0].index] === "Others") return;
             props.stockClick(tickers[element[0].index]);
           },
           maintainAspectRatio: false,
@@ -31,7 +43,10 @@ export default function PieChart(props) {
             },
             datalabels: {
               formatter: (value, context) => {
-                return value < 4 ? "" : `${tickers[context.dataIndex]}\n${value}%`;
+                if (tickers[context.dataIndex] === "Others") {
+                  return tickers[context.dataIndex];
+                }
+                return value < 3 ? "" : `${tickers[context.dataIndex]}\n${value}%`;
               },
             },
           },
