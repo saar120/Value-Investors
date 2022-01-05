@@ -4,6 +4,7 @@ import HomePage from "./Pages/HomePage";
 import InvestorsPage from "./Pages/InvestorsPage";
 import InvestorPage from "./Pages/InvestorPage";
 import { ContextProvider } from "./Context/Context";
+import ScrollToTop from "./Utils/ScrollToTop";
 import Navbar from "./Components/Navbar";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
     <div className="App">
       <Router>
         <ContextProvider>
+          <ScrollToTop />
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
