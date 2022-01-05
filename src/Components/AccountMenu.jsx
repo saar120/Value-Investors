@@ -19,14 +19,13 @@ const AccountMenuStyled = styled.div`
   transform: translate(-50%, -50%);
   border-radius: 15px;
   background-color: #f7f7ff;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.76);
   display: flex;
   flex-direction: column;
 
   .top {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+    display: flex;
+    justify-content: flex-end;
   }
   .pointer {
     cursor: pointer;
