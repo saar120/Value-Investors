@@ -5,7 +5,7 @@ const NavbarStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
-  height: 2.5rem;
+  height: 60px;
   background-color: #1976d2;
   div {
     display: flex;

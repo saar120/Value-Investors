@@ -3,7 +3,7 @@ import styled from "styled-components";
 const StockPopup = styled.div`
   z-index: 100;
   width: 300px;
-  padding: 2rem;
+  padding: 0.3rem 2rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -15,6 +15,7 @@ const StockPopup = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 export default StockPopup;

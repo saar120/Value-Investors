@@ -10,6 +10,10 @@ export default function Navbar() {
   const { userContext } = useContext(Context);
   const [user] = userContext;
 
+  const navClick = () => {
+    setShowForm((prev) => !prev);
+  };
+
   return (
     <NavbarStyled>
       <div className="navbar left">
@@ -27,7 +31,7 @@ export default function Navbar() {
       <div className="navbar right">
         <ClickAwayListener onClickAway={() => setShowForm(false)}>
           <div>
-            <Button onClick={() => setShowForm((prev) => !prev)} className="navItem">
+            <Button onClick={navClick} className="navItem">
               {user ? "Your account" : "Login"}
             </Button>
             {showForm ? (

@@ -9,6 +9,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 const widthBreakPoint = 700;
 
 const AccountMenuStyled = styled.div`
+  color: black;
   z-index: 100;
   width: 300px;
   padding: 2rem;
@@ -21,6 +22,7 @@ const AccountMenuStyled = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
   display: flex;
   flex-direction: column;
+
   .top {
     position: absolute;
     top: 5px;
