@@ -35,6 +35,7 @@ export default function InvestorPage() {
       const investor = await getInvestor(investorId);
       setInvestorData(investor);
     };
+
     const setStocksFromStorage = () => {
       const stocksData = getData("stocks");
       if (!stocksData) {
@@ -42,6 +43,7 @@ export default function InvestorPage() {
       }
       setStocks(stocksData);
     };
+
     setStocksFromStorage();
     setInvestor();
   }, [investorId]);
