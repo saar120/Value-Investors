@@ -49,7 +49,7 @@ export default function InvestorPage() {
   }, [investorId]);
 
   useEffect(() => {
-    if (watchlist.find((investor) => investor.id === InvestorData.id)) {
+    if (watchlist?.find((investor) => investor.id === InvestorData.id)) {
       setInWatchlist(true);
     } else {
       setInWatchlist(false);
