@@ -30,7 +30,7 @@ const insertInvestor = (newData) => {
 };
 
 const insertUser = async (newData) => {
-  await setDoc(doc(db, "users", newData.id), newData);
+  await setDoc(doc(db, "users", newData.id), { ...newData, watchlist: [] });
 };
 
 const getUserData = async (userId) => {
