@@ -73,7 +73,7 @@ export default function UserLoggedMenu({ closePage }) {
       <div className="name">
         Hi, <span>{user.displayName}</span>
       </div>
-      <div>{watchlist.length === 0 ? "Your Watchlist is empty" : "Watchlist"}</div>
+      <div>{watchlist?.length === 0 ? "Your Watchlist is empty" : "Watchlist"}</div>
       <WatchlistStyled>{renderWatchlist()}</WatchlistStyled>
       <Button
         onClick={() => {
